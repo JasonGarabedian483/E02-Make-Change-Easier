@@ -8,9 +8,10 @@ const readout = document.querySelector<HTMLParagraphElement>(
 let producersVar = 2;
 
 function updateDisplay() {
-  const productionVar = producersVar * 3;
-  const consumptionVar = 6;
-  const balanceVar = productionVar - consumptionVar;
+  const result = calculationShift();
+  const productionVar = result.production;
+  const consumptionVar = result.consumption;
+  const balanceVar = result.balance;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (let i = 0; i < 6; i++) {
     ctx.fillStyle = i < producersVar ? "#27766b" : "#c9d2c9";
@@ -33,6 +34,19 @@ function updateDisplay() {
     `Assigned: ${producersVar}/6 · Production: ${productionVar} · Consumption: ${consumptionVar} · Balance: ${
       balanceVar > 0 ? "+" : ""
     }${balanceVar}`;
+}
+
+type shiftResult = {
+  production: number;
+  consumption: number;
+  balance: number;
+};
+
+function calculationShift(): shiftResult {
+  const production = producersVar * 3;
+  const consumption = 6;
+  const balance = production - consumption;
+  return { production, consumption, balance };
 }
 
 document.querySelector<HTMLButtonElement>("#allocation-less")!.onclick = () => {
